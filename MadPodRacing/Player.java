@@ -35,11 +35,9 @@ class Player {
                 thrust = 100;
             }
             Coordinate newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
-            if (nextCheckpointDist < 300){
-                thrust = 0;
-            } else if ((previousDist - nextCheckpointDist) < 400 && (previousDist - nextCheckpointDist) != 0){
-                thrust = 100;
-                newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
+            if (nextCheckpointDist < 500){
+                int newTargetX = nextCheckpointX - (myPod.getCoordinate().getX() - nextCheckpointX);
+                int newTargetY = nextCheckpointY - (myPod.getCoordinate().getY() - nextCheckpointY);
             } else {
                 newTarget = myPod.newTarget(nextCheckpointAngle, nextCheckpointX, nextCheckpointY);
             }
