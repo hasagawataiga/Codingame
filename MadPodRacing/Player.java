@@ -7,7 +7,6 @@ class Player {
         Scanner in = new Scanner(System.in);
         Ship myPod = new Ship();
         Ship enemyPod = new Ship();
-        int previousDist = 0;
         // game loop
         while (true) {
             int x = in.nextInt();
@@ -37,10 +36,11 @@ class Player {
             Coordinate newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
             if (nextCheckpointDist < 500){
                 newTarget = myPod.newTarget(nextCheckpointX, nextCheckpointY);
+                thrust = 100;
             } else {
                 newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
             }
-            if (myPod.canBoosted() && nextCheckpointAngle < 5 && nextCheckpointDist > 5000){
+            if (myPod.canBoosted() && nextCheckpointAngle < 5 && nextCheckpointAngle > -5 && nextCheckpointDist > 5000){
                 myPod.switchBoostedValue();
                 command = newTarget.toString() + " " + "BOOST";
             } else {
