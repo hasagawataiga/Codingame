@@ -1,7 +1,13 @@
+package MadPodRacing;
+
 import java.util.Scanner;
-public class Player {
+class Player {
+
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
+        Ship myPod = new Ship();
+        Ship enemyPod = new Ship();
+        int previousDist = 0;
         // game loop
         while (true) {
             int x = in.nextInt();
@@ -15,12 +21,38 @@ public class Player {
 
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
+            System.err.println(nextCheckpointAngle + "@ " + nextCheckpointDist + "m");
+            System.err.println(nextCheckpointX + " " + nextCheckpointY);
 
-
+            String command;
+            int thrust = 0;
+            myPod.setCoordinate(x, y);
+            enemyPod.setCoordinate(opponentX, opponentY);
+            if (nextCheckpointAngle > 90 || nextCheckpointAngle < -90){
+                thrust = 0;
+            } else {
+                // thrust = (int)Math.ceil(100.0 * (90 - Math.abs(nextCheckpointAngle)) / 90);
+                thrust = 100;
+            }
+            Coordinate newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
+            if (nextCheckpointDist < 300){
+                thrust = 0;
+            } else if ((previousDist - nextCheckpointDist) < 400 && (previousDist - nextCheckpointDist) != 0){
+                thrust = 100;
+                newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
+            } else {
+                newTarget = myPod.newTarget(nextCheckpointAngle, nextCheckpointX, nextCheckpointY);
+            }
+            if (myPod.canBoosted() && nextCheckpointAngle < 5 && nextCheckpointDist > 5000){
+                myPod.switchBoostedValue();
+                command = newTarget.toString() + " " + "BOOST";
+            } else {
+                command =  newTarget.toString() + " " + thrust;
+            }
             // You have to output the target position
             // followed by the power (0 <= thrust <= 100)
             // i.e.: "x y thrust"
-            System.out.println(nextCheckpointX + " " + nextCheckpointY + " 80");
+            System.out.println(command);
         }
     }
 }
