@@ -22,24 +22,9 @@ class Ship{
     public void switchBoostedValue (){
         this.canBoosted = false;
     }
-    public Coordinate newTarget (int angle, int x, int y){
-        int targetX = 0;
-        int targetY = 0;
-        // convert degrees to radians
-        double radians = Math.toRadians(angle);
-        // sin() method to get the sine value
-        double sinValue = Math.sin(radians);
-        double cosValue = Math.cos(radians);
-        if (coordinate.getX() > x){
-            targetX = (int)(x + (cosValue * 500));
-        } else {
-            targetX = (int)(x - (cosValue * 500));
-        }
-        if (coordinate.getY() > y){
-            targetY = (int)(y + (sinValue * 500));
-        } else {
-            targetY = (int)(y - (sinValue * 500));
-        }
+    public Coordinate newTarget (int x, int y){
+        int targetX = x - (coordinate.getX() - x);
+        int targetY = y - (coordinate.getY() - y);
         return new Coordinate(targetX, targetY);
     }
 }

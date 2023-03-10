@@ -36,10 +36,9 @@ class Player {
             }
             Coordinate newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
             if (nextCheckpointDist < 500){
-                int newTargetX = nextCheckpointX - (myPod.getCoordinate().getX() - nextCheckpointX);
-                int newTargetY = nextCheckpointY - (myPod.getCoordinate().getY() - nextCheckpointY);
+                newTarget = myPod.newTarget(nextCheckpointX, nextCheckpointY);
             } else {
-                newTarget = myPod.newTarget(nextCheckpointAngle, nextCheckpointX, nextCheckpointY);
+                newTarget = new Coordinate(nextCheckpointX, nextCheckpointY);
             }
             if (myPod.canBoosted() && nextCheckpointAngle < 5 && nextCheckpointDist > 5000){
                 myPod.switchBoostedValue();
